@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import LoginForm from "./loginForm";
+import Welcome from "./welcomePage";
+
+export const successContext = React.createContext("");
 
 function App() {
+  const [success, setSuccess] = useState(false);
+
+  const toggleSuccess = (childData) => {
+    setSuccess(!success);
+    setContextValue([...contextValue, childData]);
+  };
+
+  const [contextValue, setContextValue] = useState([toggleSuccess]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <successContext.Provider value={contextValue}>
+      <div className="parent">
+        {!success ? <LoginForm /> : ""}
+        {success ? <Welcome /> : ""}
+      </div>
+    </successContext.Provider>
   );
 }
 
